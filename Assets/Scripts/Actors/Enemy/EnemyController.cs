@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using slaughter.de.Actors.Character;
 using slaughter.de.Pooling;
@@ -32,26 +33,31 @@ namespace slaughter.de.Actors.Enemy
             transform.position = transform.position + (Vector3)(direction * speed * Time.deltaTime);
         }
     
-        // private void OnCollisionEnter2D(Collision2D collision)
-        // {
-        //     if (collision.gameObject.tag == "Player")
-        //     {
-        //         StartCoroutine(DoDamageOn(collision.gameObject));
-        //         Debug.Log("Spieler Tot");
-        //     }
-        // }
-        //
-        // private IEnumerator DoDamageOn(GameObject damageTaker)
-        // {
-        //     this.canTakeDamage = true;
-        //     while (canTakeDamage) // sobald on Collusion Exit muss das auf false !!!!!!!!!!!!
-        //     {
-        //         damageTaker.GetComponent<PlayerController>().takeDamage(10f);
-        //         yield return new WaitForSeconds(1);
-        //     }
-        //
-        //     yield return null;
-        // }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                StartCoroutine(DoDamageOn(collision.gameObject));
+                Debug.Log("Spieler Tot");
+            }
+        }
+
+        void OnCollisionExit(Collision other)
+        {
+            this.canTakeDamage = false;
+        }
+
+        private IEnumerator DoDamageOn(GameObject damageTaker)
+        {
+            this.canTakeDamage = true;
+            while (canTakeDamage) // sobald on Collusion Exit muss das auf false !!!!!!!!!!!!
+            {
+                damageTaker.GetComponent<PlayerController>().takeDamage(10f);
+                yield return new WaitForSeconds(1);
+            }
+        
+            yield return null;
+        }
 
 
         public void takeDamage(float damage)

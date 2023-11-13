@@ -17,7 +17,8 @@ namespace slaughter.de.Weapons
                 var shovelBehaviour = spawnedShovel.GetComponent<ShovelBehaviour>();
                 if (shovelBehaviour != null)
                 {
-                    shovelBehaviour.Initialize(this.transform.position ,hitEnemies[0].transform.position, speed);
+                    spawnedShovel.SetActive(true);
+                    shovelBehaviour.Initialize(this.transform.position, hitEnemies[0].transform.position, speed);
                 }
             }
         }

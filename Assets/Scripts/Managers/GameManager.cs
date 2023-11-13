@@ -1,4 +1,5 @@
-﻿using slaughter.de.Pooling;
+﻿using slaughter.de.Actors.Enemy;
+using slaughter.de.Pooling;
 using UnityEngine;
 namespace slaughter.de.Managers
 {
@@ -12,6 +13,14 @@ namespace slaughter.de.Managers
         float spawnRate;
         [SerializeField]
         Vector3 spawnLocation;
+        
+        
+        [SerializeField] private GameObject levelMenu; // Verweise auf das Level-Menü-GameObject
+        
+        public delegate void GameStatusChangedHandler(GameState newState);
+        public event GameStatusChangedHandler GameStatusChanged;
+
+        
         public float GetWaveTimer()
         {
             return waveTimer;
@@ -21,6 +30,7 @@ namespace slaughter.de.Managers
 
         void Awake()
         {
+            levelMenu.SetActive(false);
             if (Instance == null)
             {
                 Instance = this;
@@ -59,15 +69,30 @@ namespace slaughter.de.Managers
                     }
                     break;
                     // Logik für die Gegnerwellen
-                    break;
                 case GameState.Paused:
                     // Pausenlogik
                     break;
                 case GameState.ItemSelection:
-                    // Logik für die Item-Auswahl
+                    OpenLevelMenu();
+                    StopWave();
                     break;
             }
         }
+        
+        void OpenLevelMenu()
+        {
+            levelMenu.SetActive(true);
+            ChangeState(GameState.ItemSelection); // Aktualisiere den Status
+            StopWave(); // Stoppe die Welle
+        }
+
+        public void CloseLevelMenu()
+        {
+            levelMenu.SetActive(false);
+            ChangeState(GameState.WaveInProgress); // oder GameState.Running, je nach Spiellogik
+            // Starte die nächste Welle oder führe andere Aktionen aus
+        }
+
         void SpawnEnemies()
         {
             if (Time.time > nextSpawnTime)
@@ -86,6 +111,7 @@ namespace slaughter.de.Managers
             if (currentState != newState) // Verhindert, dass der Zustand mehrmals hintereinander gesetzt wird
             {
                 currentState = newState;
+                GameStatusChanged?.Invoke(newState);
                 switch (newState)
                 {
                     case GameState.WaveInProgress:
@@ -98,6 +124,18 @@ namespace slaughter.de.Managers
                     // Weitere Zustandsübergänge
                 }
             }
+        }
+        
+        public void StopWave()
+        {
+            // Gegner entfernen
+            EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+            foreach (EnemyController enemy in enemies)
+            {
+                EnemyPoolManager.Instance.Return(enemy.gameObject); // Gegner in den Pool zurückgeben
+            }
+            // Timer zurücksetzen
+            waveTimer = 0f;
         }
 
         void StartWave()
