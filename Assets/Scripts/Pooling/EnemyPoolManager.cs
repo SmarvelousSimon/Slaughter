@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 namespace slaughter.de.Pooling
 {
-    public class EnemyPoolManager: MonoBehaviour
+    public class EnemyPoolManager : MonoBehaviour
     {
-        public static EnemyPoolManager Instance { get; private set; }
         public GameObject prefab;
-        private int poolsize { get; set; }
 
 
         // Definiere Pools für verschiedene Waffentypen
-        private ObjectPoolBase _poolBase;
+        ObjectPoolBase _poolBase;
+        public static EnemyPoolManager Instance { get; private set; }
+        int poolsize { get; set; }
 
-        private void Awake()
+        void Awake()
         {
             Instance = this;
             _poolBase = new ObjectPoolBase(prefab, 1); // Initialisiere den Shovel Pool

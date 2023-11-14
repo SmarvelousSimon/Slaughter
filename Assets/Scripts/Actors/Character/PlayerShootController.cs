@@ -1,6 +1,4 @@
-using slaughter.de.Pooling;
 using UnityEngine;
-
 namespace slaughter.de
 {
     public class PlayerShootController : MonoBehaviour

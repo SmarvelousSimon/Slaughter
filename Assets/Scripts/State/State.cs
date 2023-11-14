@@ -22,11 +22,10 @@ namespace slaughter.de.Managers
         {
             yield break;
         }
-        
+
         public virtual IEnumerator Prepare()
         {
             yield break;
         }
-
     }
 }

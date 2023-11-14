@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using slaughter.de.Movement;
 using UnityEngine;
-
 namespace slaughter.de
 {
     public class PlayerAnimator : MonoBehaviour

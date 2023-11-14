@@ -710,9 +710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c448f739d4f4e418ade86315f64b8da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveDuration: 3
-  nextSpawnTime: 1
-  spawnRate: 1
+  waveDuration: 10
+  nextSpawnTime: 0.5
+  spawnRate: 0.1
   spawnLocation: {x: 1, y: 1, z: 0}
 --- !u!1 &831473183
 GameObject:

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 namespace slaughter.de.Camera
 {
     public class FollowCharacter : MonoBehaviour

@@ -5,8 +5,8 @@ namespace slaughter.de.UI
 {
     public class WaveTimerUI : MonoBehaviour
     {
-        TextMeshProUGUI timerText;
         WaveManager _waveManager;
+        TextMeshProUGUI timerText;
 
         void Start()
         {

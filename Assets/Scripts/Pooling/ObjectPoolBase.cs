@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
 namespace slaughter.de.Pooling
 {
     public class ObjectPoolBase
     {
-        private Queue<GameObject> pool = new Queue<GameObject>();
-        private GameObject prefab;
+        readonly Queue<GameObject> pool = new Queue<GameObject>();
+        readonly GameObject prefab;
 
         public ObjectPoolBase(GameObject prefab, int size)
         {
@@ -34,9 +32,9 @@ namespace slaughter.de.Pooling
             pool.Enqueue(objectToReturn);
         }
 
-        private void AddObject()
+        void AddObject()
         {
-            var newObject = GameObject.Instantiate(prefab);
+            var newObject = Object.Instantiate(prefab);
             newObject.SetActive(false);
             pool.Enqueue(newObject);
         }

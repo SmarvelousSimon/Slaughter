@@ -1,6 +1,3 @@
-using slaughter.de.Pooling;
-using UnityEngine;
-
 namespace slaughter.de.Spawner
 {
     // public class ActorSpawner : MonoBehaviour

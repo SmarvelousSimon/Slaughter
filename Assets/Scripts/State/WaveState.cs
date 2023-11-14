@@ -4,8 +4,8 @@ namespace slaughter.de.Managers
 {
     public class WaveState : State
     {
-        private float startTime;
-        
+        float startTime;
+
         public override IEnumerator Start()
         {
             // Deine Implementierung der Logik für den WaveState

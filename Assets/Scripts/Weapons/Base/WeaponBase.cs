@@ -6,7 +6,7 @@ namespace slaughter.de.Weapons
         public float damage;
         public float speed;
         public float cooldownDuration;
-        private float currentCooldown;
+        float currentCooldown;
 
         protected virtual void Start()
         {

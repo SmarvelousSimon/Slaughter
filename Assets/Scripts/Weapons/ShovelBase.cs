@@ -13,12 +13,12 @@ namespace slaughter.de.Weapons
             var hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
             if (hitEnemies.Length > 0)
             {
-                GameObject spawnedShovel = ShovelPoolManager.Instance.Get();
+                var spawnedShovel = ShovelPoolManager.Instance.Get();
                 var shovelBehaviour = spawnedShovel.GetComponent<ShovelBehaviour>();
                 if (shovelBehaviour != null)
                 {
                     spawnedShovel.SetActive(true);
-                    shovelBehaviour.Initialize(this.transform.position, hitEnemies[0].transform.position, speed);
+                    shovelBehaviour.Initialize(transform.position, hitEnemies[0].transform.position, speed);
                 }
             }
         }

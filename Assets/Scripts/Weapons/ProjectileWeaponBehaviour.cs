@@ -13,7 +13,7 @@ namespace slaughter.de.Weapons
             // StartCoroutine(ReturnToPoolAfterDelay(destroyAfterSeconds));
         }
 
-        private IEnumerator ReturnToPoolAfterDelay(float delay)
+        IEnumerator ReturnToPoolAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
             Debug.Log("Send Back: " + delay);

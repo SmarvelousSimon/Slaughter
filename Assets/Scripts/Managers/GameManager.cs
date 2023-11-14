@@ -1,14 +1,12 @@
 ﻿using System;
-using UnityEngine;
 namespace slaughter.de.Managers
 {
     public class GameManager : StateMachine
     {
         public static GameManager Instance { get; private set; }
-        private State currentState;
         public State CurrentState
         {
-            get { return currentState; }
+            get;
         }
 
 
@@ -27,7 +25,7 @@ namespace slaughter.de.Managers
 
         public Type GetCurrentStateType()
         {
-            return currentState?.GetType();
+            return CurrentState?.GetType();
         }
 
         void MakeSingelton()

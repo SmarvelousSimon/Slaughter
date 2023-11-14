@@ -11,6 +11,5 @@ namespace slaughter.de.Managers
             Debug.Log(State);
             StartCoroutine(State.Start());
         }
-
     }
 }

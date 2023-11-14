@@ -3,7 +3,7 @@
     public enum ControversialThemes
     {
         Lobbyists,
-        Naysayers,
+        Naysayers
         // Corruption,
         // Inequality,
         // ClimateCrisis,

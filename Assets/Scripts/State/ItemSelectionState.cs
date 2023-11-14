@@ -4,14 +4,14 @@ namespace slaughter.de.Managers
 {
     public class ItemSelectionState : State
     {
-        private bool selectionCompleted = false;
+        bool selectionCompleted;
 
         public override IEnumerator Start()
         {
             // Deine Implementierung der Logik für den WaveState
             yield return ItemSelection(); // Starte die Wave Coroutine
         }
-        
+
         public override IEnumerator ItemSelection()
         {
             UIManager.Instance.OnItemSelectionCompleted += HandleSelectionCompleted;
@@ -25,7 +25,7 @@ namespace slaughter.de.Managers
             GameManager.Instance.SetState(new WaveState());
         }
 
-        private void HandleSelectionCompleted()
+        void HandleSelectionCompleted()
         {
             selectionCompleted = true;
             UIManager.Instance.OnItemSelectionCompleted -= HandleSelectionCompleted;

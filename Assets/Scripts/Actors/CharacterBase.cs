@@ -2,7 +2,7 @@ namespace slaughter.de.Actors
 {
     public interface CharacterBase
     {
-        public void takeDamage(float damage)
+        public void TakeDamage(float damage)
         {
         }
     }

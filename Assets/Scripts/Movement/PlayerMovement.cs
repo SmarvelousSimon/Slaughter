@@ -1,8 +1,5 @@
 using System.Collections;
-using slaughter.de.Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
-
 namespace slaughter.de.Movement
 {
     public class PlayerMovement : MonoBehaviour
@@ -12,12 +9,12 @@ namespace slaughter.de.Movement
         [HideInInspector]
         public float lastViewYDirection;
         [HideInInspector]
-        public Vector2 moveDir = new Vector2();
+        public Vector2 moveDir;
         public float speed = 8f;
         [SerializeField]
         UnityEngine.Camera mainCamera;
 
-        private bool canMove = true;
+        readonly bool canMove = true;
 
         void Start()
         {

@@ -7,20 +7,20 @@ namespace slaughter.de.Managers
 {
     public class WaveManager : MonoBehaviour
     {
-        public static WaveManager Instance { get; private set; }
-
-        private int currentWaveIndex = 0;
-        private ControversialThemes[] waveThemes = (ControversialThemes[])ControversialThemes.GetValues(typeof(ControversialThemes));
 
         public float waveDuration = 10f; // Dauer der Welle in Sekunden
-        float waveTimer;
         public float nextSpawnTime = 10f;
         [SerializeField]
         float spawnRate;
         [SerializeField]
         Vector3 spawnLocation;
-        
-        private bool isWaveActive;
+        readonly ControversialThemes[] waveThemes = (ControversialThemes[])Enum.GetValues(typeof(ControversialThemes));
+
+        int currentWaveIndex;
+
+        bool isWaveActive;
+        float waveTimer;
+        public static WaveManager Instance { get; private set; }
 
 
         void Awake()
@@ -44,7 +44,7 @@ namespace slaughter.de.Managers
             if (currentWaveIndex < waveThemes.Length)
             {
                 isWaveActive = true; // Welle als aktiv markieren TODO ist durch den gamestate auch einsehbar
-                ControversialThemes currentTheme = waveThemes[currentWaveIndex];
+                var currentTheme = waveThemes[currentWaveIndex];
                 StartCoroutine(SpawnWave(currentTheme));
                 currentWaveIndex++;
             }
@@ -60,8 +60,8 @@ namespace slaughter.de.Managers
             isWaveActive = false; // Welle als inaktiv markieren
 
             // Gegner entfernen
-            EnemyController[] enemies = FindObjectsOfType<EnemyController>();
-            foreach (EnemyController enemy in enemies)
+            var enemies = FindObjectsOfType<EnemyController>();
+            foreach (var enemy in enemies)
             {
                 EnemyPoolManager.Instance.Return(enemy.gameObject);
             }
@@ -69,7 +69,7 @@ namespace slaughter.de.Managers
             waveTimer = 0f;
         }
 
-        private IEnumerator SpawnWave(ControversialThemes theme)
+        IEnumerator SpawnWave(ControversialThemes theme)
         {
             float startTime = Time.time;
             while (isWaveActive && Time.time - startTime < waveDuration)
@@ -93,7 +93,7 @@ namespace slaughter.de.Managers
         {
             if (Time.time > nextSpawnTime)
             {
-                GameObject enemy = EnemyPoolManager.Instance.Get();
+                var enemy = EnemyPoolManager.Instance.Get();
                 enemy.transform.position = spawnLocation; // Setze die Position des Gegners
                 enemy.SetActive(true); // Aktiviere den Gegner
 
@@ -101,7 +101,7 @@ namespace slaughter.de.Managers
             }
         }
 
-        private void MakeSingelton()
+        void MakeSingelton()
         {
             if (Instance == null)
             {
@@ -113,6 +113,5 @@ namespace slaughter.de.Managers
                 Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
             }
         }
-
     }
 }

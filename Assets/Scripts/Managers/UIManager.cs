@@ -4,16 +4,18 @@ namespace slaughter.de.Managers
 {
     public class UIManager : MonoBehaviour
     {
+        [SerializeField]
+        GameObject levelMenu;
         public static UIManager Instance { get; private set; }
-        [SerializeField] private GameObject levelMenu;
-
-        public event Action OnItemSelectionCompleted;
 
         void Awake()
         {
             MakeSingelton();
         }
 
+        public event Action OnItemSelectionCompleted;
+        public event Action OnGameOverCompleted;
+// Start Region WaveMenu
         public void OpenLevelMenu()
         {
             levelMenu.SetActive(true);
@@ -29,8 +31,9 @@ namespace slaughter.de.Managers
             // Diese Methode wird aufgerufen, wenn der Spieler seine Auswahl getroffen hat und auf einen Button klickt
             OnItemSelectionCompleted?.Invoke();
         }
+// End Region WaveMenu
 
-        private void MakeSingelton()
+        void MakeSingelton()
         {
             if (Instance == null)
             {
@@ -41,6 +44,14 @@ namespace slaughter.de.Managers
             {
                 Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
             }
+        }
+        public void OpenGameOverMenu()
+        {
+            throw new NotImplementedException();
+        }
+        public void CloseGameOverMenu()
+        {
+            throw new NotImplementedException();
         }
     }
 }

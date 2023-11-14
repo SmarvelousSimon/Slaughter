@@ -1,7 +1,6 @@
 ﻿namespace slaughter.de.Managers
 {
-    public class StartState  : State
+    public class MenuState : State
     {
-        
     }
 }

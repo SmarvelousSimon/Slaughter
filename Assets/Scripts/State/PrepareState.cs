@@ -4,7 +4,7 @@ namespace slaughter.de.Managers
 {
     public class PrepareState : State
     {
-        
+
         public override IEnumerator Prepare()
         {
             Debug.Log("Enter pepare state.");
@@ -12,7 +12,7 @@ namespace slaughter.de.Managers
             yield return new WaitForSeconds(2f);
             Debug.Log("Exit pepare state.");
             GameManager.Instance.SetState(new WaveState());
-            
+
         }
     }
 }
