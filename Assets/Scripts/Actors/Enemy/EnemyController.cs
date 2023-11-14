@@ -64,8 +64,6 @@ namespace slaughter.de.Actors.Enemy
         {
             health -= damage;
             
-            Debug.Log(health -= damage);
-
             if (health <= 0)
             {
                 killEnemy();

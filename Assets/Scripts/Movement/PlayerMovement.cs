@@ -52,20 +52,5 @@ namespace slaughter.de.Movement
                 yield return null;
             }
         }
-
-        void OnEnable()
-        {
-            GameManager.Instance.GameStatusChanged += OnGameStatusChanged;
-        }
-
-        void OnDisable()
-        {
-            GameManager.Instance.GameStatusChanged -= OnGameStatusChanged;
-        }
-
-        private void OnGameStatusChanged(GameState newState)
-        {
-            canMove = newState == GameState.WaveInProgress || newState == GameState.Running;
-        }
     }
 }

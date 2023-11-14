@@ -49,8 +49,6 @@ namespace slaughter.de.Weapons
         void makeDamage(Collider2D collision)
         {
             var enemy = collision.gameObject.GetComponent<EnemyController>();
-            
-                Debug.Log(enemy);
             if (enemy != null)
             {
                 enemy.takeDamage(5f);

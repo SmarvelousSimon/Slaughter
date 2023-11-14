@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &214318394
 Grid:
   m_ObjectHideFlags: 0
@@ -622,6 +622,9 @@ GameObject:
   m_Component:
   - component: {fileID: 794756954}
   - component: {fileID: 794756953}
+  - component: {fileID: 794756958}
+  - component: {fileID: 794756957}
+  - component: {fileID: 794756956}
   - component: {fileID: 794756955}
   m_Layer: 0
   m_Name: GameManager
@@ -642,12 +645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058dda516399402bbe064bc06a78308b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  waveDuration: 5
-  nextSpawnTime: 1
-  spawnRate: 1
-  spawnLocation: {x: 2, y: 2, z: 0}
-  levelMenu: {fileID: 1016156248}
 --- !u!4 &794756954
 Transform:
   m_ObjectHideFlags: 0
@@ -676,6 +673,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 618032517075682249, guid: 25f2dcb5c7e9fa14087612d2e068f83c, type: 3}
+--- !u!114 &794756956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794756952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4705e47f8647c5ae545769988eecaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &794756957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794756952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac0649127ba4187ad14e91436a08652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelMenu: {fileID: 1016156248}
+--- !u!114 &794756958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794756952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c448f739d4f4e418ade86315f64b8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveDuration: 3
+  nextSpawnTime: 1
+  spawnRate: 1
+  spawnLocation: {x: 1, y: 1, z: 0}
 --- !u!1 &831473183
 GameObject:
   m_ObjectHideFlags: 0
@@ -11673,9 +11711,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 794756953}
-        m_TargetAssemblyTypeName: slaughter.de.Managers.GameManager, Assembly-CSharp
-        m_MethodName: CloseLevelMenu
+      - m_Target: {fileID: 794756957}
+        m_TargetAssemblyTypeName: slaughter.de.Managers.UIManager, Assembly-CSharp
+        m_MethodName: ItemSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
