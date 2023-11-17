@@ -3,13 +3,24 @@ namespace slaughter.de.Managers
 {
     public class CharacterManager : MonoBehaviour
     {
-        // Charakterattribute und -fähigkeiten
+        public static CharacterManager Instance { get; private set; }
 
-        public void UpgradeCharacter( /* Parameter für spezifische Upgrades */)
+        void Awake()
         {
-            // Logik zum Verbessern des Charakters
+            MakeSingelton();
         }
 
-        // Weitere Charakter-bezogene Methoden...
+        void MakeSingelton()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject); // Optional: Verhindert das Zerstören beim Laden
+            }
+            else
+            {
+                Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
+            }
+        }
     }
 }

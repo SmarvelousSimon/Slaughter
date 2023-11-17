@@ -1,4 +1,5 @@
 using System.Collections;
+using slaughter.de.Managers;
 using slaughter.de.Pooling;
 using UnityEngine;
 namespace slaughter.de.Actors.Enemy
@@ -14,20 +15,37 @@ namespace slaughter.de.Actors.Enemy
 
         public int damage = 1;
         bool canTakeDamage = true;
+        private Vector2 targetPosition; // Die Position, der der Gegner folgen wird
 
+
+        public float followDelay = 0.5f; // Verzögerung in Sekunden
         void Start()
         {
             player = GameObject.FindWithTag("Player");
         }
 
+
         void Update()
         {
-            Vector2 direction = player.transform.position - transform.position;
+            StartCoroutine(UpdateTargetPosition());
+            MoveTowardsTarget();
+        }
 
-            // Normalisiere die Richtung (mache sie zu einem Einheitsvektor)
+
+        IEnumerator UpdateTargetPosition()
+        {
+            while (true)
+            {
+                targetPosition = player.transform.position;
+                yield return new WaitForSeconds(followDelay);
+            }
+        }
+
+        void MoveTowardsTarget()
+        {
+            Vector2 direction = targetPosition - (Vector2)transform.position;
             direction.Normalize();
-
-            transform.position = transform.position + (Vector3)(direction * speed * Time.deltaTime);
+            transform.position += (Vector3)(direction * speed * Time.deltaTime);
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -69,8 +87,31 @@ namespace slaughter.de.Actors.Enemy
 
         void killEnemy()
         {
-            // Stelle sicher, dass du den PoolManager korrekt eingerichtet hast, um diesen Aufruf zu unterstützen
             ShovelPoolManager.Instance.Return(gameObject);
+            DropCoin();
+
+        }
+
+        void DropCoin()
+        {
+
+            CoinType droppedCoin = GetRandomCoinType();
+            GameObject coin = CoinPoolManager.Instance.GetCoin(droppedCoin);
+            coin.transform.position = transform.position; // Platziere die Münze dort, wo der Gegner gestorben ist
+
+        }
+
+
+        CoinType GetRandomCoinType()
+        {
+            // Hier kannst du eine Zufallslogik basierend auf den Seltenheiten implementieren
+            int randomValue = UnityEngine.Random.Range(0, 100); // Beispielwert
+
+            if (randomValue < 50) return CoinType.Common; // 50% Wahrscheinlichkeit
+            if (randomValue < 70) return CoinType.Uncommon; // 20% Wahrscheinlichkeit
+            if (randomValue < 85) return CoinType.Rare; // 15% Wahrscheinlichkeit
+            // Füge hier weitere Wahrscheinlichkeiten für die anderen Typen hinzu
+            return CoinType.Common; // Standardfall
         }
     }
 }
