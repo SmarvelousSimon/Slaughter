@@ -7,18 +7,18 @@ namespace slaughter.de.Pooling
         public GameObject coinPrefab;
         public Sprite[] coinSprites; // Array von Sprites für jede Münzart
 
-        private ObjectPoolBase coinPool;
+        private ObjectPoolBase _coinPool;
         public static CoinPoolManager Instance { get; private set; }
 
         void Awake()
         {
             Instance = this;
-            coinPool = new ObjectPoolBase(coinPrefab, 10); // Angenommene Poolgröße 10
+            _coinPool = new ObjectPoolBase(coinPrefab, 10); // Angenommene Poolgröße 10
         }
 
         public GameObject GetCoin(CoinType type)
         {
-            GameObject coin = coinPool.Get();
+            GameObject coin = _coinPool.Get();
             SpriteRenderer spriteRenderer = coin.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null && (int)type < coinSprites.Length)
             {
@@ -29,7 +29,17 @@ namespace slaughter.de.Pooling
 
         public void ReturnCoin(GameObject coin)
         {
-            coinPool.Return(coin);
+            _coinPool.Return(coin);
+        }
+        
+        public void ResetPool()
+        {
+            Debug.Log("Resetting Coin Pool");
+            foreach (var obj in _coinPool.GetAllActiveObjects())
+            {
+                obj.SetActive(false);
+                _coinPool.Return(obj);
+            }
         }
     }
 }

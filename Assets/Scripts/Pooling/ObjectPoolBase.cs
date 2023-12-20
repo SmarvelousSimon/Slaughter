@@ -6,6 +6,8 @@ namespace slaughter.de.Pooling
     {
         readonly Queue<GameObject> pool = new Queue<GameObject>();
         readonly GameObject prefab;
+        private HashSet<GameObject> activeObjects = new HashSet<GameObject>();
+
 
         public ObjectPoolBase(GameObject prefab, int size)
         {
@@ -23,6 +25,7 @@ namespace slaughter.de.Pooling
 
             var obj = pool.Dequeue();
             obj.SetActive(true);
+            activeObjects.Add(obj);
             return obj;
         }
 
@@ -30,6 +33,8 @@ namespace slaughter.de.Pooling
         {
             objectToReturn.SetActive(false);
             pool.Enqueue(objectToReturn);
+            activeObjects.Remove(objectToReturn);
+
         }
 
         void AddObject()
@@ -38,6 +43,12 @@ namespace slaughter.de.Pooling
             newObject.SetActive(false);
             pool.Enqueue(newObject);
         }
+        
+        public List<GameObject> GetAllActiveObjects()
+        {
+            return new List<GameObject>(activeObjects);
+        }
+        
     }
 
 }

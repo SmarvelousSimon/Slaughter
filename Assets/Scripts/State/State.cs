@@ -1,8 +1,11 @@
 ﻿using System.Collections;
+using UnityEngine;
 namespace slaughter.de.Managers
 {
     public abstract class State
     {
+        protected Coroutine RunningCoroutine;
+
         public virtual IEnumerator Start()
         {
             yield break;
@@ -26,6 +29,15 @@ namespace slaughter.de.Managers
         public virtual IEnumerator Prepare()
         {
             yield break;
+        }
+
+        public void StopRunningCoroutine(MonoBehaviour owner)
+        {
+            if (RunningCoroutine != null)
+            {
+                owner.StopCoroutine(RunningCoroutine);
+                RunningCoroutine = null;
+            }
         }
     }
 }

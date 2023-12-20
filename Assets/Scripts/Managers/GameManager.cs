@@ -1,10 +1,17 @@
 ﻿using System;
+using slaughter.de.Actors.Character;
 namespace slaughter.de.Managers
 {
     public class GameManager : StateMachine
     {
+        private PlayerController _playerController;
+        public GameManager(State currentState)
+        {
+            CurrentState = currentState;
+        }
+
         public static GameManager Instance { get; private set; }
-        public State CurrentState
+        State CurrentState
         {
             get;
         }
@@ -12,6 +19,7 @@ namespace slaughter.de.Managers
 
         void Awake()
         {
+            _playerController = FindObjectOfType<PlayerController>();
             MakeSingelton();
         }
 
@@ -38,6 +46,13 @@ namespace slaughter.de.Managers
             else
             {
                 Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
+            }
+        }
+        public void ResetPlayer()
+        {
+            if (_playerController != null)
+            {
+                _playerController.ResetHealth();
             }
         }
     }

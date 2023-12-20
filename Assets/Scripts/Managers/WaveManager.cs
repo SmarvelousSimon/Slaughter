@@ -7,6 +7,7 @@ namespace slaughter.de.Managers
 {
     public class WaveManager : MonoBehaviour
     {
+        private Coroutine _waveCoroutine;
 
         public GameObject player;
         public float waveDuration = 10f; // Dauer der Welle in Sekunden
@@ -17,10 +18,10 @@ namespace slaughter.de.Managers
         Vector3 spawnLocation;
         readonly ControversialThemes[] waveThemes = (ControversialThemes[])Enum.GetValues(typeof(ControversialThemes));
 
-        int currentWaveIndex;
+        int _currentWaveIndex;
 
-        bool isWaveActive;
-        float waveTimer;
+        bool _isWaveActive;
+        float _waveTimer;
         public static WaveManager Instance { get; private set; }
 
 
@@ -31,23 +32,22 @@ namespace slaughter.de.Managers
 
         public float GetWaveTimer()
         {
-            return waveTimer;
+            return _waveTimer;
         }
 
         public void SetWaveTimer(float time)
         {
-            waveTimer = time;
+            _waveTimer = time;
         }
 
 
         public void StartNextWave()
         {
-            if (currentWaveIndex < waveThemes.Length)
+            if (_currentWaveIndex < waveThemes.Length)
             {
-                isWaveActive = true; // Welle als aktiv markieren TODO ist durch den gamestate auch einsehbar
-                var currentTheme = waveThemes[currentWaveIndex];
-                StartCoroutine(SpawnWave(currentTheme));
-                currentWaveIndex++;
+                _isWaveActive = true;
+                _waveCoroutine = StartCoroutine(SpawnWave(waveThemes[_currentWaveIndex]));
+                _currentWaveIndex++;
             }
             else
             {
@@ -58,8 +58,12 @@ namespace slaughter.de.Managers
 
         public void StopWave()
         {
-            isWaveActive = false; // Welle als inaktiv markieren
-
+            _isWaveActive = false;
+            if (_waveCoroutine != null)
+            {
+                StopCoroutine(_waveCoroutine);
+                _waveCoroutine = null;
+            }
             // Gegner entfernen
             var enemies = FindObjectsOfType<EnemyController>();
             foreach (var enemy in enemies)
@@ -67,15 +71,25 @@ namespace slaughter.de.Managers
                 EnemyPoolManager.Instance.Return(enemy.gameObject);
             }
 
-            waveTimer = 0f;
+            _waveTimer = 0f;
         }
+
+        public void ResetWaves()
+        {
+            StopWave(); // Stellt sicher, dass alle aktuellen Aktivitäten gestoppt werden
+            _currentWaveIndex = 0; // Setzt den Index der aktuellen Welle zurück
+            _waveTimer = waveDuration; // Setzt den Wave-Timer zurück
+            // isWaveActive = false; // Setzt den Status der Welle zurück
+            // Eventuell weitere zurückzusetzende Variablen
+        }
+
 
         IEnumerator SpawnWave(ControversialThemes theme)
         {
             float startTime = Time.time;
             nextSpawnTime = Time.time; // Initialisiere nextSpawnTime mit der aktuellen Zeit
 
-            while (isWaveActive && Time.time - startTime < waveDuration)
+            while (_isWaveActive && Time.time - startTime < waveDuration)
             {
                 if (Time.time > nextSpawnTime)
                 {
@@ -109,7 +123,7 @@ namespace slaughter.de.Managers
                 SpawnEnemyAtPosition(spawnPos);
             }
         }
-        
+
         Vector3 GetRandomSpawnPosition()
         {
             // Implementiere Logik, um eine zufällige Position außerhalb des Sichtfeldes zu wählen
@@ -126,7 +140,7 @@ namespace slaughter.de.Managers
             enemy.transform.position = position;
             enemy.SetActive(true);
         }
-        
+
         void Update()
         {
             DespawnEnemiesOutOfRange();

@@ -6,23 +6,38 @@ namespace slaughter.de.Managers
     {
         [SerializeField]
         GameObject levelMenu;
+        [SerializeField]
+        GameObject gameOverMenu;
+
+        private bool isPaused = false;
+
+        public event Action OnItemSelectionCompleted;
+        public event Action OnRestartGameCompleted;
+        public event Action OnCloseGameCompleted;
+
         public static UIManager Instance { get; private set; }
 
         void Awake()
         {
+            DisableAllMenues();
             MakeSingelton();
         }
+        void DisableAllMenues()
+        {
+            levelMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
+        }
+#region WaveMenu
 
-        public event Action OnItemSelectionCompleted;
-        public event Action OnGameOverCompleted;
-// Start Region WaveMenu
         public void OpenLevelMenu()
         {
+            PauseGame();
             levelMenu.SetActive(true);
         }
 
         public void CloseLevelMenu()
         {
+            ResumeGame();
             levelMenu.SetActive(false);
         }
 
@@ -31,7 +46,18 @@ namespace slaughter.de.Managers
             // Diese Methode wird aufgerufen, wenn der Spieler seine Auswahl getroffen hat und auf einen Button klickt
             OnItemSelectionCompleted?.Invoke();
         }
-// End Region WaveMenu
+
+#endregion
+        
+        public void RestartGame()
+        {
+            OnRestartGameCompleted?.Invoke();
+        }
+
+        public void CloseGameAndGoToMainMenu()
+        {
+            OnCloseGameCompleted?.Invoke();
+        }
 
         void MakeSingelton()
         {
@@ -47,11 +73,38 @@ namespace slaughter.de.Managers
         }
         public void OpenGameOverMenu()
         {
-            throw new NotImplementedException();
+            PauseGame();
+            gameOverMenu.SetActive(true);
         }
         public void CloseGameOverMenu()
         {
-            throw new NotImplementedException();
+            ResumeGame();
+            gameOverMenu.SetActive(false);
+        }
+
+        // Diese Funktion können Sie aufrufen, wenn das Menü geöffnet wird
+        public void PauseGame()
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
+
+        // Diese Funktion können Sie aufrufen, wenn das Menü geschlossen wird
+        public void ResumeGame()
+        {
+            Time.timeScale = 1f;
+            isPaused = false;
+        }
+
+
+        public void ResetUI()
+        {
+            Debug.Log("ResetUI");
+
+            // Setze UI-Elemente zurück
+            // ...
+            //
         }
     }
+
 }

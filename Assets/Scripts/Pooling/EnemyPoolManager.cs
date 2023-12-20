@@ -26,6 +26,18 @@ namespace slaughter.de.Pooling
         {
             _poolBase.Return(gameObject);
         }
+        
+        public void ResetPool()
+        {
+            Debug.Log("Resetting Enemy Pool");
+
+            foreach (var obj in _poolBase.GetAllActiveObjects())
+            {
+                obj.SetActive(false);
+                _poolBase.Return(obj);
+            }
+        }
+
 
         // Weitere Methoden für andere Waffentypen...
     }

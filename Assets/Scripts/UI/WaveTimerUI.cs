@@ -5,24 +5,22 @@ namespace slaughter.de.UI
 {
     public class WaveTimerUI : MonoBehaviour
     {
-        WaveManager _waveManager;
-        TextMeshProUGUI timerText;
+        TextMeshProUGUI _timerText;
 
         void Start()
         {
-            timerText = GetComponentInChildren<TextMeshProUGUI>();
-            _waveManager = WaveManager.Instance;
+            _timerText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         void Update()
         {
             if (GameManager.Instance.GetCurrentStateType() == typeof(WaveState))
             {
-                timerText.text = "Time Left: " + _waveManager.GetWaveTimer().ToString("F2");
+                _timerText.text = WaveManager.Instance.GetWaveTimer().ToString("F2");
             }
             else
             {
-                timerText.text = "";
+                _timerText.text = "";
             }
         }
     }

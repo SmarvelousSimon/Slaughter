@@ -7,6 +7,11 @@ namespace slaughter.de.Managers
 
         public void SetState(State state)
         {
+            if (State != null)
+            {
+                State.StopRunningCoroutine(this);
+            }
+            
             State = state;
             Debug.Log(State);
             StartCoroutine(State.Start());

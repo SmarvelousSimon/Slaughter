@@ -22,6 +22,7 @@ namespace slaughter.de.Actors.Character
             }
         }
 
+
         void KillPlayer()
         {
             GameManager.Instance.SetState(new GameOverState());
@@ -55,5 +56,22 @@ namespace slaughter.de.Actors.Character
                 yield return new WaitForSeconds(1); // Wartezeit zwischen den Schadensereignissen
             }
         }
+        
+        void ResetPlayer()
+        {
+            var playerController = FindObjectOfType<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.ResetHealth(); // Methode im PlayerController zum Zurücksetzen der Gesundheit
+            }
+        }
+        
+        public void ResetHealth()
+        {
+            health = 100f; // Standardgesundheit
+            enemyCollisionCount = 0; // Zurücksetzen der Kollisionen
+            // Weitere zurückzusetzende Parameter
+        }
+
     }
 }
