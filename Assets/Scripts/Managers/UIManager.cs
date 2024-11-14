@@ -1,13 +1,12 @@
 ﻿using System;
 using UnityEngine;
+
 namespace slaughter.de.Managers
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField]
-        GameObject levelMenu;
-        [SerializeField]
-        GameObject gameOverMenu;
+        [SerializeField] private GameObject levelMenu;
+        [SerializeField] private GameObject gameOverMenu;
 
         private bool isPaused = false;
 
@@ -17,17 +16,19 @@ namespace slaughter.de.Managers
 
         public static UIManager Instance { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             DisableAllMenues();
             MakeSingelton();
         }
-        void DisableAllMenues()
+
+        private void DisableAllMenues()
         {
             levelMenu.SetActive(false);
             gameOverMenu.SetActive(false);
         }
-#region WaveMenu
+
+        #region WaveMenu
 
         public void OpenLevelMenu()
         {
@@ -47,8 +48,8 @@ namespace slaughter.de.Managers
             OnItemSelectionCompleted?.Invoke();
         }
 
-#endregion
-        
+        #endregion
+
         public void RestartGame()
         {
             OnRestartGameCompleted?.Invoke();
@@ -59,7 +60,7 @@ namespace slaughter.de.Managers
             OnCloseGameCompleted?.Invoke();
         }
 
-        void MakeSingelton()
+        private void MakeSingelton()
         {
             if (Instance == null)
             {
@@ -71,11 +72,13 @@ namespace slaughter.de.Managers
                 Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
             }
         }
+
         public void OpenGameOverMenu()
         {
             PauseGame();
             gameOverMenu.SetActive(true);
         }
+
         public void CloseGameOverMenu()
         {
             ResumeGame();
@@ -106,5 +109,4 @@ namespace slaughter.de.Managers
             //
         }
     }
-
 }

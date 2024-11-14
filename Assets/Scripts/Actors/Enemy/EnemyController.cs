@@ -1,67 +1,77 @@
 using System.Collections;
+using slaughter.de.Coin;
 using slaughter.de.Managers;
 using slaughter.de.Pooling;
 using UnityEngine;
+
 namespace slaughter.de.Actors.Enemy
 {
+   
     public class EnemyController : MonoBehaviour, CharacterBase
     {
         public float health = 5f;
-
 
         public GameObject player;
 
         public float speed = 1f;
 
         public int damage = 1;
-        bool canTakeDamage = true;
+        private bool canTakeDamage = true;
+
         private Vector2 targetPosition; // Die Position, der der Gegner folgen wird
 
-
         public float followDelay = 0.5f; // Verzögerung in Sekunden
-        void Start()
+
+        private static readonly WaitForSeconds followWait;
+        private static readonly WaitForSeconds oneSecondWait = new WaitForSeconds(1f);
+
+        private Vector2 direction; // Wiederverwendeter Vector zur Richtung
+
+        static EnemyController()
         {
-            player = GameObject.FindWithTag("Player");
+            // Cache für WaitForSeconds-Objekte, um Allokationen zu reduzieren
+            followWait = new WaitForSeconds(0.5f);
         }
 
-
-        void Update()
+        private void Start()
         {
-            StartCoroutine(UpdateTargetPosition());
+            player = GameObject.FindWithTag("Player");
+            InvokeRepeating(nameof(UpdateTargetPosition), 0f, followDelay);
+        }
+
+        private void Update()
+        {
             MoveTowardsTarget();
         }
 
-
-        IEnumerator UpdateTargetPosition()
+        private void UpdateTargetPosition()
         {
-            while (true)
+            if (player != null)
             {
                 targetPosition = player.transform.position;
-                yield return new WaitForSeconds(followDelay);
             }
         }
 
-        void MoveTowardsTarget()
+        private void MoveTowardsTarget()
         {
-            Vector2 direction = targetPosition - (Vector2)transform.position;
+            direction = targetPosition - (Vector2)transform.position;
             direction.Normalize();
             transform.position += (Vector3)(direction * speed * Time.deltaTime);
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.tag == "Player")
+            if (collision.gameObject.CompareTag("Player"))
             {
                 StartCoroutine(DoDamageOn(collision.gameObject));
                 Debug.Log("Spieler Tot");
             }
         }
 
-        void OnCollisionExit(Collision other)
+        private void OnCollisionExit2D(Collision2D other)
         {
             canTakeDamage = false;
         }
-
 
         public void TakeDamage(float damage)
         {
@@ -69,43 +79,37 @@ namespace slaughter.de.Actors.Enemy
 
             if (health <= 0)
             {
-                killEnemy();
+                KillEnemy();
             }
         }
 
-        IEnumerator DoDamageOn(GameObject damageTaker)
+        private IEnumerator DoDamageOn(GameObject damageTaker)
         {
             canTakeDamage = true;
-            while (canTakeDamage) // sobald on Collusion Exit muss das auf false !!!!!!!!!!!!
+            while (canTakeDamage)
             {
                 TakeDamage(10f);
-                yield return new WaitForSeconds(1);
+                yield return oneSecondWait;
             }
-
-            yield return null;
         }
 
-        void killEnemy()
+        private void KillEnemy()
         {
             ShovelPoolManager.Instance.Return(gameObject);
             DropCoin();
-
         }
 
-        void DropCoin()
+        private void DropCoin()
         {
-
-            CoinType droppedCoin = GetRandomCoinType();
-            GameObject coin = CoinPoolManager.Instance.GetCoin(droppedCoin);
+            var droppedCoin = GetRandomCoinType();
+            var coin = CoinPoolManager.Instance.GetCoin(droppedCoin);
             coin.transform.position = transform.position; // Platziere die Münze dort, wo der Gegner gestorben ist
-
         }
 
-
-        CoinType GetRandomCoinType()
+        private CoinType GetRandomCoinType()
         {
             // Hier kannst du eine Zufallslogik basierend auf den Seltenheiten implementieren
-            int randomValue = UnityEngine.Random.Range(0, 100); // Beispielwert
+            var randomValue = Random.Range(0, 100); // Beispielwert
 
             if (randomValue < 50) return CoinType.Common; // 50% Wahrscheinlichkeit
             if (randomValue < 70) return CoinType.Uncommon; // 20% Wahrscheinlichkeit

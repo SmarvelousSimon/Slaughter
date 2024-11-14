@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+
 namespace slaughter.de.Camera
 {
     public class FollowCharacter : MonoBehaviour
@@ -7,12 +8,12 @@ namespace slaughter.de.Camera
         public GameObject Character;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             StartCoroutine(Follow(Character));
         }
 
-        IEnumerator Follow(GameObject charGameObject)
+        private IEnumerator Follow(GameObject charGameObject)
         {
             while (true)
             {

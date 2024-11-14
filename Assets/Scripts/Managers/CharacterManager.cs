@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
+
 namespace slaughter.de.Managers
 {
     public class CharacterManager : MonoBehaviour
     {
         public static CharacterManager Instance { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             MakeSingelton();
         }
 
-        void MakeSingelton()
+        private void MakeSingelton()
         {
             if (Instance == null)
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using slaughter.de.Managers;
 using UnityEngine;
+
 namespace slaughter.de.Actors.Character
 {
     public class PlayerController : MonoBehaviour, CharacterBase
@@ -8,7 +9,7 @@ namespace slaughter.de.Actors.Character
         public float health = 100f;
         private int enemyCollisionCount = 0; // Zählt, wie viele Gegner den Spieler berühren
 
-        void Start()
+        private void Start()
         {
         }
 
@@ -16,39 +17,31 @@ namespace slaughter.de.Actors.Character
         {
             health -= damage;
             Debug.Log("Player Health: " + health);
-            if (health <= 0)
-            {
-                KillPlayer();
-            }
+            if (health <= 0) KillPlayer();
         }
 
 
-        void KillPlayer()
+        private void KillPlayer()
         {
             GameManager.Instance.SetState(new GameOverState());
         }
 
-        void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.tag == "Enemy")
             {
                 enemyCollisionCount++;
                 if (enemyCollisionCount == 1) // Starte die Coroutine nur, wenn der erste Gegner den Spieler berührt
-                {
                     StartCoroutine(TakeDamageOverTime());
-                }
             }
         }
 
-        void OnTriggerExit2D(Collider2D collision)
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.gameObject.tag == "Enemy")
-            {
-                enemyCollisionCount--;
-            }
+            if (collision.gameObject.tag == "Enemy") enemyCollisionCount--;
         }
 
-        IEnumerator TakeDamageOverTime()
+        private IEnumerator TakeDamageOverTime()
         {
             while (enemyCollisionCount > 0)
             {
@@ -56,22 +49,19 @@ namespace slaughter.de.Actors.Character
                 yield return new WaitForSeconds(1); // Wartezeit zwischen den Schadensereignissen
             }
         }
-        
-        void ResetPlayer()
+
+        private void ResetPlayer()
         {
-            var playerController = FindObjectOfType<PlayerController>();
+            var playerController = FindFirstObjectByType<PlayerController>();
             if (playerController != null)
-            {
                 playerController.ResetHealth(); // Methode im PlayerController zum Zurücksetzen der Gesundheit
-            }
         }
-        
+
         public void ResetHealth()
         {
             health = 100f; // Standardgesundheit
             enemyCollisionCount = 0; // Zurücksetzen der Kollisionen
             // Weitere zurückzusetzende Parameter
         }
-
     }
 }

@@ -1,42 +1,31 @@
 ﻿using System;
 using slaughter.de.Actors.Character;
+
 namespace slaughter.de.Managers
 {
     public class GameManager : StateMachine
     {
         private PlayerController _playerController;
-        public GameManager(State currentState)
-        {
-            CurrentState = currentState;
-        }
 
         public static GameManager Instance { get; private set; }
-        State CurrentState
+
+        private void Awake()
         {
-            get;
+            _playerController = FindFirstObjectByType<PlayerController>();
+            MakeSingleton();
         }
 
-
-        void Awake()
+        private void Start()
         {
-            _playerController = FindObjectOfType<PlayerController>();
-            MakeSingelton();
-        }
-
-        void Start()
-        {
-            // currentState = new PrepareState(); // Zeile 22
-            SetState(new PrepareState()); // Rufe SetState mit einer Instanz von PrepareState auf
-
-            StartCoroutine(State.Prepare()); // Zeile 24
+            SetState(new PrepareState()); // Zustand wechseln und Start-Methode ausführen
         }
 
         public Type GetCurrentStateType()
         {
-            return CurrentState?.GetType();
+            return State?.GetType(); // Gibt den Typ des aktuellen Zustands zurück
         }
 
-        void MakeSingelton()
+        private void MakeSingleton()
         {
             if (Instance == null)
             {
@@ -48,12 +37,10 @@ namespace slaughter.de.Managers
                 Destroy(gameObject); // Sicherstellen, dass keine Duplikate existieren
             }
         }
+
         public void ResetPlayer()
         {
-            if (_playerController != null)
-            {
-                _playerController.ResetHealth();
-            }
+            if (_playerController) _playerController.ResetHealth();
         }
     }
 }

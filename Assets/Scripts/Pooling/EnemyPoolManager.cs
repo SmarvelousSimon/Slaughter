@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace slaughter.de.Pooling
 {
     public class EnemyPoolManager : MonoBehaviour
@@ -7,11 +8,11 @@ namespace slaughter.de.Pooling
 
 
         // Definiere Pools für verschiedene Waffentypen
-        ObjectPoolBase _poolBase;
+        private ObjectPoolBase _poolBase;
         public static EnemyPoolManager Instance { get; private set; }
-        int poolsize { get; set; }
+        private int poolsize { get; set; }
 
-        void Awake()
+        private void Awake()
         {
             Instance = this;
             _poolBase = new ObjectPoolBase(prefab, 1); // Initialisiere den Shovel Pool
@@ -26,7 +27,7 @@ namespace slaughter.de.Pooling
         {
             _poolBase.Return(gameObject);
         }
-        
+
         public void ResetPool()
         {
             Debug.Log("Resetting Enemy Pool");

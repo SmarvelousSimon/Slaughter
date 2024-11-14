@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using slaughter.de.Pooling;
+using slaughter.de.State;
 using UnityEngine;
+
 namespace slaughter.de.Managers
 {
-    public class PrepareState : State
+    public class PrepareState : State.State
     {
-        
         public override IEnumerator Start()
         {
             yield return Prepare();
@@ -19,6 +20,5 @@ namespace slaughter.de.Managers
             Debug.Log("Exit pepare state.");
             GameManager.Instance.SetState(new WaveState());
         }
-       
     }
 }

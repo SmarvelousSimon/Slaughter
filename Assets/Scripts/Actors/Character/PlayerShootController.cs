@@ -1,4 +1,5 @@
 using UnityEngine;
+
 namespace slaughter.de
 {
     public class PlayerShootController : MonoBehaviour

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using slaughter.de.State;
 using UnityEngine;
+
 namespace slaughter.de.Managers
 {
-    public class ItemSelectionState : State
+    public class ItemSelectionState : State.State
     {
-        bool selectionCompleted;
+        private bool selectionCompleted;
 
         public override IEnumerator Start()
         {
@@ -25,7 +27,7 @@ namespace slaughter.de.Managers
             GameManager.Instance.SetState(new WaveState());
         }
 
-        void HandleSelectionCompleted()
+        private void HandleSelectionCompleted()
         {
             selectionCompleted = true;
             UIManager.Instance.OnItemSelectionCompleted -= HandleSelectionCompleted;

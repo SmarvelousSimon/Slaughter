@@ -2,9 +2,10 @@
 using slaughter.de.Actors.Character;
 using slaughter.de.Pooling;
 using UnityEngine;
+
 namespace slaughter.de.Managers
 {
-    public class GameOverState : State
+    public class GameOverState : State.State
     {
         private bool selectionCompleted = false;
         private bool playerWantToStartAnotherGame = false;
@@ -38,7 +39,7 @@ namespace slaughter.de.Managers
             }
         }
 
-        void HandleRestartGameCompleted()
+        private void HandleRestartGameCompleted()
         {
             selectionCompleted = true;
             playerWantToStartAnotherGame = true;
@@ -46,7 +47,7 @@ namespace slaughter.de.Managers
             UIManager.Instance.OnCloseGameCompleted -= HandleCloseGameCompleted;
         }
 
-        void HandleCloseGameCompleted()
+        private void HandleCloseGameCompleted()
         {
             selectionCompleted = true;
             playerWantToStartAnotherGame = false;
@@ -54,7 +55,7 @@ namespace slaughter.de.Managers
             UIManager.Instance.OnCloseGameCompleted -= HandleCloseGameCompleted;
         }
 
-        void ClearLevel()
+        private void ClearLevel()
         {
             Debug.Log("ClearLevel");
             GameManager.Instance.ResetPlayer();

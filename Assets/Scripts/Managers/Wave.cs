@@ -24,6 +24,6 @@
         Bureaucracy,
         Whatabouttism,
         ToxicalMan,
-        WealthDisparity,
+        WealthDisparity
     }
 }

@@ -1,27 +1,25 @@
 ﻿using slaughter.de.Managers;
+using slaughter.de.State;
 using TMPro;
 using UnityEngine;
+
 namespace slaughter.de.UI
 {
     public class WaveTimerUI : MonoBehaviour
     {
-        TextMeshProUGUI _timerText;
+        private TextMeshProUGUI _timerText;
 
-        void Start()
+        private void Start()
         {
             _timerText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        void Update()
+        private void Update()
         {
             if (GameManager.Instance.GetCurrentStateType() == typeof(WaveState))
-            {
                 _timerText.text = WaveManager.Instance.GetWaveTimer().ToString("F2");
-            }
             else
-            {
                 _timerText.text = "";
-            }
         }
     }
 }

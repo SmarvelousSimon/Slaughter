@@ -1,5 +1,6 @@
 ﻿using slaughter.de.Pooling;
 using UnityEngine;
+
 namespace slaughter.de.Weapons
 {
     public class ShovelBase : WeaponBase

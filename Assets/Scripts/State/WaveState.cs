@@ -1,33 +1,29 @@
 ﻿using System.Collections;
+using slaughter.de.Managers;
 using UnityEngine;
-namespace slaughter.de.Managers
+
+namespace slaughter.de.State
 {
     public class WaveState : State
     {
-        float startTime;
+        private float startTime;
 
         public override IEnumerator Start()
         {
-            // Deine Implementierung der Logik für den WaveState
+            Debug.Log("WaveState startet.");
+
+            // Abonniere das OnWaveEnded-Ereignis vom WaveManager
+            WaveManager.Instance.OnWaveEnded += HandleWaveEnded;
+
             yield return Wave(); // Starte die Wave Coroutine
         }
 
-        /// <summary>
-        /// This method represents a wave in the game.
-        /// </summary>
-        /// <returns>
-        /// An enumerator that can be used in a coroutine.
-        /// </returns>
-        /// <remarks>
-        /// This method starts a wave, sets the wave timer, and stops the wave after a certain duration.
-        /// It also changes the game state to Item Selection State after the wave ends.
-        /// </remarks>
         public override IEnumerator Wave()
         {
             Debug.Log("Start Wave.");
             WaveManager.Instance.StartNextWave();
 
-            float remainingTime = WaveManager.Instance.waveDuration;
+            var remainingTime = WaveManager.Instance.waveDuration;
             while (remainingTime > 0 && GameManager.Instance.GetCurrentStateType() == typeof(WaveState))
             {
                 remainingTime -= Time.deltaTime;
@@ -44,5 +40,21 @@ namespace slaughter.de.Managers
             }
         }
 
+        public void StopRunningCoroutine(MonoBehaviour owner)
+        {
+            base.StopRunningCoroutine(owner);
+            // Hänge Abmeldung vom OnWaveEnded-Ereignis hier an
+            WaveManager.Instance.OnWaveEnded -= HandleWaveEnded;
+        }
+
+        private void HandleWaveEnded()
+        {
+            // Zustand wechseln, wenn die Welle endet
+            if (GameManager.Instance.GetCurrentStateType() == typeof(WaveState))
+            {
+                Debug.Log("End Wave (von WaveManager-Ereignis)");
+                GameManager.Instance.SetState(new ItemSelectionState());
+            }
+        }
     }
 }

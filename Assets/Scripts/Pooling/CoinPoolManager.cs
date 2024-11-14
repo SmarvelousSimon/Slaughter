@@ -1,5 +1,7 @@
-﻿using slaughter.de.Managers;
+﻿using slaughter.de.Coin;
+using slaughter.de.Managers;
 using UnityEngine;
+
 namespace slaughter.de.Pooling
 {
     public class CoinPoolManager : MonoBehaviour
@@ -10,7 +12,7 @@ namespace slaughter.de.Pooling
         private ObjectPoolBase _coinPool;
         public static CoinPoolManager Instance { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             Instance = this;
             _coinPool = new ObjectPoolBase(coinPrefab, 10); // Angenommene Poolgröße 10
@@ -18,12 +20,10 @@ namespace slaughter.de.Pooling
 
         public GameObject GetCoin(CoinType type)
         {
-            GameObject coin = _coinPool.Get();
-            SpriteRenderer spriteRenderer = coin.GetComponent<SpriteRenderer>();
+            var coin = _coinPool.Get();
+            var spriteRenderer = coin.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null && (int)type < coinSprites.Length)
-            {
                 spriteRenderer.sprite = coinSprites[(int)type]; // Setze das Sprite basierend auf dem Münztyp
-            }
             return coin;
         }
 
@@ -31,7 +31,7 @@ namespace slaughter.de.Pooling
         {
             _coinPool.Return(coin);
         }
-        
+
         public void ResetPool()
         {
             Debug.Log("Resetting Coin Pool");

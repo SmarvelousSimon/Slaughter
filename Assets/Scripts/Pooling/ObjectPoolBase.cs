@@ -1,21 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace slaughter.de.Pooling
 {
     public class ObjectPoolBase
     {
-        readonly Queue<GameObject> pool = new Queue<GameObject>();
-        readonly GameObject prefab;
-        private HashSet<GameObject> activeObjects = new HashSet<GameObject>();
+        private readonly Queue<GameObject> pool = new();
+        private readonly GameObject prefab;
+        private HashSet<GameObject> activeObjects = new();
 
 
         public ObjectPoolBase(GameObject prefab, int size)
         {
             this.prefab = prefab;
-            for (int i = 0; i < size; i++)
-            {
-                AddObject();
-            }
+            for (var i = 0; i < size; i++) AddObject();
         }
 
         public GameObject Get()
@@ -34,21 +32,18 @@ namespace slaughter.de.Pooling
             objectToReturn.SetActive(false);
             pool.Enqueue(objectToReturn);
             activeObjects.Remove(objectToReturn);
-
         }
 
-        void AddObject()
+        private void AddObject()
         {
             var newObject = Object.Instantiate(prefab);
             newObject.SetActive(false);
             pool.Enqueue(newObject);
         }
-        
+
         public List<GameObject> GetAllActiveObjects()
         {
             return new List<GameObject>(activeObjects);
         }
-        
     }
-
 }

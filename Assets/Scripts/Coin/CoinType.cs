@@ -1,4 +1,4 @@
-﻿namespace slaughter.de.Managers
+﻿namespace slaughter.de.Coin
 {
     public enum CoinType
     {
@@ -11,6 +11,4 @@
         Divine,
         Ultimate
     }
-
-
 }

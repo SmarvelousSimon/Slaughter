@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
-namespace slaughter.de.Managers
+
+namespace slaughter.de.State
 {
     public abstract class State
     {
