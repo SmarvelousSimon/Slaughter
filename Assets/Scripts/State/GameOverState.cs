@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using slaughter.de.Actors.Character;
-using slaughter.de.Pooling;
+using slaughter.de.enums;
+using slaughter.de.Managers;
 using UnityEngine;
 
-namespace slaughter.de.Managers
+namespace slaughter.de.State
 {
-    public class GameOverState : State.State
+    public class GameOverState : State
     {
         private bool selectionCompleted = false;
         private bool playerWantToStartAnotherGame = false;
@@ -30,7 +30,7 @@ namespace slaughter.de.Managers
 
             if (playerWantToStartAnotherGame)
             {
-                ClearLevel();
+                GameManager.Instance.ResetLevel(Reason.PlayerDeath);
                 GameManager.Instance.SetState(new PrepareState());
             }
             else
@@ -54,19 +54,6 @@ namespace slaughter.de.Managers
             UIManager.Instance.OnRestartGameCompleted -= HandleRestartGameCompleted;
             UIManager.Instance.OnCloseGameCompleted -= HandleCloseGameCompleted;
         }
-
-        private void ClearLevel()
-        {
-            Debug.Log("ClearLevel");
-            GameManager.Instance.ResetPlayer();
-            WaveManager.Instance.ResetWaves(); // schmeißt die gegner in den pool
-            // EnemyPoolManager.Instance.ResetPool();
-            UIManager.Instance.ResetUI();
-            CoinPoolManager.Instance.ResetPool();
-            // set all coins to zero
-            // set hp to default
-            // back to pool
-            // reset progress
-        }
+        
     }
 }

@@ -40,7 +40,7 @@ namespace slaughter.de.Managers
         {
             if (!coinsCollected.ContainsKey(coinType)) coinsCollected[coinType] = 0;
             coinsCollected[coinType]++;
-            Debug.Log($"Collected {coinsCollected[coinType]} of {coinType}");
+             //Debug.Log($"Collected {coinsCollected[coinType]} of {coinType}");
         }
     }
 }

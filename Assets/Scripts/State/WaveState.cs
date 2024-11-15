@@ -21,6 +21,8 @@ namespace slaughter.de.State
         public override IEnumerator Wave()
         {
             Debug.Log("Start Wave.");
+            
+            
             WaveManager.Instance.StartNextWave();
 
             var remainingTime = WaveManager.Instance.waveDuration;

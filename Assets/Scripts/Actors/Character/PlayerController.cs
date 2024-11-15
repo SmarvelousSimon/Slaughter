@@ -1,5 +1,6 @@
 using System.Collections;
 using slaughter.de.Managers;
+using slaughter.de.State;
 using UnityEngine;
 
 namespace slaughter.de.Actors.Character

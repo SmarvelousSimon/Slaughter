@@ -51,6 +51,18 @@ namespace slaughter.de.Managers
 
         public void StartNextWave()
         {
+            
+            
+            // Spieler an die Start position zurück setzen
+            // heals des spielers zurück setzen
+            
+            // coins zurück setzen aber die vorherigen in eine tasche abspeichern
+            // alle coins in den pool zurück setzen und allgemein den pool aufräumen?
+            
+            // alle gegner weg und den pool ggf. aufräumen weil evtl andere gegner kommen?
+            
+            //timer zurück setzen
+            
             if (_currentWaveIndex < _waveThemes.Length)
             {
                 _isWaveActive = true;

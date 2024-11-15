@@ -1,10 +1,15 @@
 ﻿using System;
 using slaughter.de.Actors.Character;
+using slaughter.de.enums;
+using slaughter.de.Pooling;
+using UnityEngine;
 
 namespace slaughter.de.Managers
 {
     public class GameManager : StateMachine
     {
+        public event Action gameReset;
+ 
         private PlayerController _playerController;
 
         public static GameManager Instance { get; private set; }
@@ -41,6 +46,22 @@ namespace slaughter.de.Managers
         public void ResetPlayer()
         {
             if (_playerController) _playerController.ResetHealth();
+        }
+
+        public void ResetLevel(Reason reason)
+        {
+            ResetPlayer();
+            UIManager.Instance.ResetUI();
+            CoinPoolManager.Instance.ResetPool();
+
+            if (reason == Reason.PlayerDeath)
+            {
+                WaveManager.Instance.ResetWaves(); // schmeißt die gegner in den pool
+            }
+            else if (reason == Reason.PlayerWantNewTry)
+            {
+                
+            }
         }
     }
 }
