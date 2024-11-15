@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace slaughter.de.Weapons.Base
+namespace slaughter.de.Item.Weapons.Base
 {
     public class WeaponBase : MonoBehaviour
     {

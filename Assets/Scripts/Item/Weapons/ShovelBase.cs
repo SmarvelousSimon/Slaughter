@@ -1,5 +1,5 @@
-﻿using slaughter.de.Pooling;
-using slaughter.de.Weapons.Base;
+﻿using slaughter.de.Item.Weapons.Base;
+using slaughter.de.Pooling;
 using UnityEngine;
 
 namespace slaughter.de.Weapons

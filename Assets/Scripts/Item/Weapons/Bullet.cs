@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using slaughter.de.Actors.Enemy;
-using slaughter.de.Pooling;
-using UnityEngine;
-
-namespace slaughter.de.Weapons
+namespace slaughter.de.Item.Weapons
 {
     // public class Bullet : MonoBehaviour, IPoolable
     // {
