@@ -26,16 +26,16 @@ namespace slaughter.de.State
             // Warte, bis ein Ereignis ausgelöst wird
             yield return new WaitUntil(() => selectionCompleted);
 
-            UIManager.Instance.CloseGameOverMenu();
+            GameManager.Instance.CloseGameOverMenu();
 
             if (playerWantToStartAnotherGame)
             {
                 GameManager.Instance.ResetLevel(Reason.PlayerDeath);
-                GameManager.Instance.SetState(new PrepareState());
+                StateManager.Instance.SetState(new PrepareState());
             }
             else
             {
-                GameManager.Instance.SetState(new MenuState());
+                StateManager.Instance.SetState(new MenuState());
             }
         }
 

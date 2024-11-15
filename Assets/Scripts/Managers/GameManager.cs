@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using slaughter.de.Actors.Character;
 using slaughter.de.enums;
 using slaughter.de.Pooling;
@@ -6,28 +6,19 @@ using UnityEngine;
 
 namespace slaughter.de.Managers
 {
-    public class GameManager : StateMachine
+    public class GameManager : MonoBehaviour
     {
-        public event Action gameReset;
- 
+        public float waveDuration = 10f; // Dauer der Welle in Sekunden
+
         private PlayerController _playerController;
 
         public static GameManager Instance { get; private set; }
+
 
         private void Awake()
         {
             _playerController = FindFirstObjectByType<PlayerController>();
             MakeSingleton();
-        }
-
-        private void Start()
-        {
-            SetState(new PrepareState()); // Zustand wechseln und Start-Methode ausführen
-        }
-
-        public Type GetCurrentStateType()
-        {
-            return State?.GetType(); // Gibt den Typ des aktuellen Zustands zurück
         }
 
         private void MakeSingleton()
@@ -60,8 +51,37 @@ namespace slaughter.de.Managers
             }
             else if (reason == Reason.PlayerWantNewTry)
             {
-                
             }
+        }
+
+        public void StartNextWave()
+        {
+            WaveManager.Instance.StartNextWave();
+        }
+
+        public void CloseAllMenues()
+        {
+            UIManager.Instance.CloseLevelMenu(); //TODO hier müssen alle menüs aus 
+        }
+
+        public Type GetCurrentStateType()
+        {
+            return StateManager.Instance.GetCurrentStateType();
+        }
+
+        public void SetWaveTimer(float remainingTime)
+        {
+            WaveManager.Instance.SetWaveTimer(remainingTime);
+        }
+
+        public void StopWave()
+        {
+            WaveManager.Instance.StopWave();
+        }
+
+        public void CloseGameOverMenu()
+        {
+           UIManager.Instance.CloseGameOverMenu();
         }
     }
 }

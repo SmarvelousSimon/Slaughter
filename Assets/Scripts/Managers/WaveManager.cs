@@ -14,7 +14,6 @@ namespace slaughter.de.Managers
 
 
         public GameObject player;
-        public float waveDuration = 10f; // Dauer der Welle in Sekunden
         public float nextSpawnTime = 10f;
         [SerializeField] private float spawnRate;
         [SerializeField] private Vector3 spawnLocation;
@@ -105,7 +104,7 @@ namespace slaughter.de.Managers
         {
             StopWave(); // Stellt sicher, dass alle aktuellen Aktivitäten gestoppt werden
             _currentWaveIndex = 0; // Setzt den Index der aktuellen Welle zurück
-            _waveTimer = waveDuration; // Setzt den Wave-Timer zurück
+            _waveTimer = GameManager.Instance.waveDuration; // Setzt den Wave-Timer zurück
             _isWaveActive = false; // Setzt den Status der Welle zurück
             // Eventuell weitere zurückzusetzende Variablen
         }
@@ -116,7 +115,7 @@ namespace slaughter.de.Managers
             var startTime = Time.time;
             nextSpawnTime = Time.time; // Initialisiere nextSpawnTime mit der aktuellen Zeit
 
-            while (_isWaveActive && Time.time - startTime < waveDuration)
+            while (_isWaveActive && Time.time - startTime < GameManager.Instance.waveDuration)
             {
                 if (Time.time > nextSpawnTime)
                 {

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace slaughter.de.Managers
+namespace slaughter.de.State
 {
     public abstract class StateMachine : MonoBehaviour
     {
-        protected State.State State;
+        protected State State;
 
-        public void SetState(State.State state)
+        public void SetState(State state)
         {
             if (State != null) State.StopRunningCoroutine(this);
 

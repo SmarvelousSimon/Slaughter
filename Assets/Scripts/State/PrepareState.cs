@@ -14,11 +14,9 @@ namespace slaughter.de.Managers
 
         public override IEnumerator Prepare()
         {
-            Debug.Log("Enter pepare state.");
-            UIManager.Instance.CloseLevelMenu(); //TODO hier müssen alle menüs aus 
+            GameManager.Instance.CloseAllMenues();
             yield return new WaitForSeconds(2f);
-            Debug.Log("Exit pepare state.");
-            GameManager.Instance.SetState(new WaveState());
+            StateManager.Instance.SetState(new WaveState());
         }
     }
 }

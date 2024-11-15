@@ -24,7 +24,7 @@ namespace slaughter.de.Actors.Character
 
         private void KillPlayer()
         {
-            GameManager.Instance.SetState(new GameOverState());
+            StateManager.Instance.SetState(new GameOverState());
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

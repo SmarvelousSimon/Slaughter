@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using slaughter.de.State;
+using slaughter.de.Managers;
 using UnityEngine;
 
-namespace slaughter.de.Managers
+namespace slaughter.de.State
 {
-    public class ItemSelectionState : State.State
+    public class ItemSelectionState : State
     {
         private bool selectionCompleted;
 
@@ -24,7 +24,7 @@ namespace slaughter.de.Managers
 
             UIManager.Instance.CloseLevelMenu();
             Debug.Log("Exit itemselection.");
-            GameManager.Instance.SetState(new WaveState());
+            StateManager.Instance.SetState(new WaveState());
         }
 
         private void HandleSelectionCompleted()

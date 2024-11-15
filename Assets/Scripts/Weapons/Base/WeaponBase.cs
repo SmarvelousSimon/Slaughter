@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 
-namespace slaughter.de.Weapons
+namespace slaughter.de.Weapons.Base
 {
     public class WeaponBase : MonoBehaviour
     {
         public float damage;
         public float speed;
         public float cooldownDuration;
-        private float currentCooldown;
+        private float _currentCooldown;
 
         protected virtual void Start()
         {
-            currentCooldown = cooldownDuration;
+            _currentCooldown = cooldownDuration;
         }
 
         protected virtual void Update()
         {
-            currentCooldown -= Time.deltaTime;
-            if (currentCooldown <= 0f)
+            _currentCooldown -= Time.deltaTime;
+            if (_currentCooldown <= 0f)
             {
                 Attack();
-                currentCooldown = cooldownDuration;
+                _currentCooldown = cooldownDuration;
             }
         }
 

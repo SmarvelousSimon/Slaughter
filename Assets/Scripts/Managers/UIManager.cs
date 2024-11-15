@@ -7,9 +7,7 @@ namespace slaughter.de.Managers
     {
         [SerializeField] private GameObject levelMenu;
         [SerializeField] private GameObject gameOverMenu;
-
-        private bool isPaused = false;
-
+        
         public event Action OnItemSelectionCompleted;
         public event Action OnRestartGameCompleted;
         public event Action OnCloseGameCompleted;
@@ -89,14 +87,12 @@ namespace slaughter.de.Managers
         public void PauseGame()
         {
             Time.timeScale = 0f;
-            isPaused = true;
         }
 
         // Diese Funktion können Sie aufrufen, wenn das Menü geschlossen wird
         public void ResumeGame()
         {
             Time.timeScale = 1f;
-            isPaused = false;
         }
 
 

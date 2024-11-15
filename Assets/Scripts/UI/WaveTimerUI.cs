@@ -16,7 +16,7 @@ namespace slaughter.de.UI
 
         private void Update()
         {
-            if (GameManager.Instance.GetCurrentStateType() == typeof(WaveState))
+            if (StateManager.Instance.GetCurrentStateType() == typeof(WaveState))
                 _timerText.text = WaveManager.Instance.GetWaveTimer().ToString("F2");
             else
                 _timerText.text = "";
