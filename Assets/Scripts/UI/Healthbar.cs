@@ -1,28 +1,43 @@
-﻿using slaughter.de.Actors.Character;
+﻿using slaughter.de.Actors.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace slaughter.de.UI
 {
+    [RequireComponent(typeof(Image))]
     public class HealthBar : MonoBehaviour
     {
-        public PlayerController player;
-        private Image healthBarImage;
+        [SerializeReference] [HideInInspector] private Image healthBarImage;
 
-        private void Start()
+        private PlayerController _player;
+
+        private void OnDestroy()
+        {
+            if (_player == null) return;
+
+            _player.OnPlayerHealthChanged -= UpdateHealthBar;
+            _player.OnPlayerMaxHealthChanged -= UpdateHealthBar;
+        }
+
+#if UNITY_EDITOR
+        private void OnValidate()
         {
             healthBarImage = GetComponent<Image>();
         }
+#endif
 
-        private void Update()
+        public void RegisterPlayer(PlayerController player)
         {
-            if (player != null)
-            {
-                // Berechne den prozentualen Anteil der Gesundheit
-                var healthPercent = player.health / 100f;
-                healthBarImage.rectTransform.sizeDelta =
-                    new Vector2(healthPercent * 200, healthBarImage.rectTransform.sizeDelta.y);
-            }
+            _player = player;
+            _player.OnPlayerHealthChanged += UpdateHealthBar;
+            _player.OnPlayerMaxHealthChanged += UpdateHealthBar;
+        }
+
+        private void UpdateHealthBar(float _)
+        {
+            var healthPercent = _player.Health / _player.MaxHealth;
+            healthBarImage.rectTransform.sizeDelta =
+                new Vector2(healthPercent * 200, healthBarImage.rectTransform.sizeDelta.y);
         }
     }
 }

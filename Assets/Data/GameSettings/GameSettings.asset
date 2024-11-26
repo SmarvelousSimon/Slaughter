@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01efab47bdf44d791315d124c8d5eca, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 7243645704462352589, guid: 8fa7ca08028e8804d9782950a9a6abd7, type: 3}
+  enemyPrefab: {fileID: -6094112852569511507, guid: 25f2dcb5c7e9fa14087612d2e068f83c, type: 3}
+  bulletPrefab: {fileID: 240701557101651213, guid: 581475391b3066545af1228e7220235a, type: 3}
+  coinTravelTime: 0.3
+  coinCollectRadius: 2
+  startWeapon: {fileID: 11400000, guid: 5afcfd25404fff64581efc1925c4822c, type: 2}
+  waves:
+  - {fileID: 11400000, guid: ff8b51abec9748843a6d083ed2f0c19a, type: 2}
+  - {fileID: 11400000, guid: ff8b51abec9748843a6d083ed2f0c19a, type: 2}
+  - {fileID: 11400000, guid: ff8b51abec9748843a6d083ed2f0c19a, type: 2}
+  weapons:
+  - {fileID: 11400000, guid: cd35ee4336d9bdc4abccf7d20fd35404, type: 2}
+  - {fileID: 11400000, guid: c2562dcdbfbf3b84cbfbdfa842365c06, type: 2}
+  coins:
+  - {fileID: 11400000, guid: 701725c542c449b47af518d1488fa074, type: 2}
+  - {fileID: 11400000, guid: ef80b9597f278104cb6cf4911ef4d013, type: 2}
+  - {fileID: 11400000, guid: 10970b4db4504f742b58189f6ec01bf6, type: 2}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  coinLayer:
+    serializedVersion: 2
+    m_Bits: 2048
